@@ -86,7 +86,7 @@ package com.wp.Pets.models;
 
 public class Pet {
 
-    private int id;
+    private int petId;
     private String name;
     private String type;
     private Owner owner;
@@ -102,7 +102,7 @@ package com.wp.Pets.models;
 
 public class Owner {
 
-    private int id;
+    private int ownerId;
     private String name;
     private List<Pet> pets;
     
@@ -160,11 +160,50 @@ OWNER
 // @OneToMany specifies that this is the one side of the relationship
 // mappedBy specifies the name of the field in the other class
 // where the primary key of the owner would serve as a foreign key
-@OneToMany(mappedBy = "owner")
+@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 private List<Pet> pets;
 ```
 
 PET
 ```java
-
+    // this code sets of the many side of the many to one relationship between pet and owner
+    // each owner can have many pets, but pets can have only one owner
+    // this does not need the @Column as there are no constrains (it can be null, pets)
+    // @ManyToOne specifies that this is the many side of the relationship
+    @ManyToOne(fetch = FetchType.EAGER)
+    // @JoinColumns specifies the column name on the one side of the relationship, the primary key in the other table
+    @JoinColumn(name="ownerId")
+    private Owner owner;
 ```
+
+### Update main class
+Add to main class:
+```java
+// @EntityScan makes Spring to scan for entities in the folder specified
+@EntityScan("com.wp.Pets.models")
+// @ComponentScan makes Spring to scan for beans in the folder specified
+@ComponentScan("com.wp.Pets")
+public class PetsApplication {}
+```
+If the app is restarted, the two tables are created and can be viewed in dBeaver.
+
+## Create DAOs
+DAOs handle the CRUD operations on the database.
+- create new package name daos under com.wp.Pets
+- create PetDAO interface: right click -> New -> Java Class -> Select Interface
+- create OwnerDAO interface
+
+PET DAO example:
+```java
+@Repository
+public interface PetDAO extends JpaRepository<Pet, Integer> {
+}
+```
+- `@Repository` makes it a bean and signals that is a repository 
+- has to extend `JPARepository<Pet, Integer>`
+- with the name of the model: Pet 
+- and the wrapper class of the type of the primary key as types
+
+## Create Controllers
+Controller will respond to incoming HTTP requests
+
