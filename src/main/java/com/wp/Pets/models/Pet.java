@@ -1,5 +1,6 @@
 package com.wp.Pets.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
@@ -30,26 +31,34 @@ public class Pet {
     // each owner can have many pets, but pets can have only one owner
     // this does not need the @Column as there are no constrains (it can be null, pets)
     // @ManyToOne specifies that this is the many side of the relationship
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     // @JoinColumns specifies the column name on the one side of the relationship, the primary key in the other table
-    @JoinColumn(name="ownerId")
+    @JoinColumn(name = "owner_id")
+    @JsonBackReference
     private Owner owner;
 
     public Pet() { }
 
-    public Pet(int id, String name, String type, Owner owner) {
-        this.petId = id;
+//    public Pet(int id, String name, String type) {
+//        this.petId = id;
+//        this.name = name;
+//        this.type = type;
+//    }
+
+
+    public Pet(int petId, String name, String type, Owner owner) {
+        this.petId = petId;
         this.name = name;
         this.type = type;
         this.owner = owner;
     }
 
-    public int getId() {
+    public int getPetId() {
         return petId;
     }
 
-    public void setId(int id) {
-        this.petId = id;
+    public void setPetId(int petId) {
+        this.petId = petId;
     }
 
     public String getName() {
@@ -79,7 +88,7 @@ public class Pet {
     @Override
     public String toString() {
         return "Pet{" +
-                "id=" + petId +
+                "petId=" + petId +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", owner=" + owner +
