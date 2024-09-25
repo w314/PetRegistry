@@ -1,10 +1,12 @@
-package com.wp.Pets.controllers;
+package com.wp.Pets.controller;
 
-import com.wp.Pets.daos.OwnerDAO;
-import com.wp.Pets.daos.PetDAO;
+import com.wp.Pets.repository.OwnerDAO;
 import com.wp.Pets.models.Owner;
 import com.wp.Pets.models.Pet;
+import com.wp.Pets.repository.PetRepository;
+import com.wp.Pets.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +19,17 @@ import java.util.Optional;
 public class PetController {
 
     // create petDAO field where you can inject dao
-    private PetDAO petDAO;
+    private PetRepository petDAO;
     private OwnerDAO ownerDAO;
 
     @Autowired // will wire the PetDAO bean to our PetController bean
-    public PetController(PetDAO petDAO, OwnerDAO ownerDAO) {
+    public PetController(PetRepository petDAO, OwnerDAO ownerDAO) {
         this.petDAO = petDAO;
         this.ownerDAO = ownerDAO;
     }
+
+    @Autowired
+    PetService petService;
 
     @PostMapping
     private ResponseEntity<Pet> addPet(@RequestBody Pet pet) {
@@ -33,9 +38,9 @@ public class PetController {
     }
 
     @GetMapping
-    private ResponseEntity<List<Pet>> getAllPets() {
-        List<Pet> pets = petDAO.findAll();
-        return ResponseEntity.ok(pets);
+    public ResponseEntity<List<Pet>> getAllPets() {
+        List<Pet> pets = this.petService.getAllPets();
+        return new ResponseEntity<>(pets, HttpStatus.OK);
     }
 
     @PatchMapping("/{petId}")

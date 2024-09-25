@@ -80,6 +80,7 @@ Server will start without error after this one.
 #### Start from regular Java class syntax
 
 PET:
+
 ```java
 // package declaration
 package com.wp.Pets.models;
@@ -96,6 +97,7 @@ public class Pet {
 ```
 
 OWNER
+
 ```java
 package com.wp.Pets.models;
 // no need to import Pet model as it is in the same package as Owner
@@ -105,7 +107,7 @@ public class Owner {
     private int ownerId;
     private String name;
     private List<Pet> pets;
-    
+
     // CONSTRUCTORS + SETTERS AND GETTERS + TOSTRING
 }
 ```

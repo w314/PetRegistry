@@ -1,4 +1,4 @@
-package com.wp.Pets.daos;
+package com.wp.Pets.repository;
 
 import com.wp.Pets.models.Owner;
 import com.wp.Pets.models.Pet;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PetDAO extends JpaRepository<Pet, Integer> {
+public interface PetRepository extends JpaRepository<Pet, Integer> {
 
 
     public List<Pet> findByOwner(Owner owner);

@@ -1,9 +1,9 @@
-package com.wp.Pets.controllers;
+package com.wp.Pets.controller;
 
-import com.wp.Pets.daos.OwnerDAO;
-import com.wp.Pets.daos.PetDAO;
+import com.wp.Pets.repository.OwnerDAO;
 import com.wp.Pets.models.Owner;
 import com.wp.Pets.models.Pet;
+import com.wp.Pets.repository.PetRepository;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +19,10 @@ import java.util.Optional;
 public class OwnerController {
 
     private OwnerDAO ownerDAO;
-    private PetDAO petDAO;
+    private PetRepository petDAO;
 
     @Autowired
-    private OwnerController(OwnerDAO ownerDAO, PetDAO petDAO) {
+    private OwnerController(OwnerDAO ownerDAO, PetRepository petDAO) {
         this.ownerDAO = ownerDAO;
         this.petDAO = petDAO;
     }

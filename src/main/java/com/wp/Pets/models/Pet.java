@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 // @Entity makes the class a DB table
 @Entity
 // @Table specifies the name of the table
-@Table(name="pets")
+@Table(name="pet")
 // @Component makes the class a bean
 @Component
 public class Pet {

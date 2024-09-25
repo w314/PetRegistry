@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Entity
-@Table(name="owners")
+@Table(name="owner")
 @Component
 public class Owner {
 

@@ -1,0 +1,27 @@
+create schema pets;
+use pets;
+
+drop table owner;
+
+create table owner(
+owner_id int primary key,
+name varchar(50)
+);
+
+insert into owner values(1, 'bob');
+insert into owner values(2, 'bobek');
+
+drop table pet;
+
+create table pet(
+pet_id int primary key,
+name varchar(50),
+type varchar(50),
+owner_id int references owner(owner_id)
+);
+
+insert into pet values(1, 'slimy', 'snail', 1);
+insert into pet values(2, 'hoppy', 'rabbit', 2);
+
+
+commit;
